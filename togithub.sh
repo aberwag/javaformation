@@ -1,0 +1,1 @@
+git init && echo -e "target/\n.classpath\n.gitignore\n.project\n.settings/"  >> .gitignore && git add --all && git commit -m "Java 8 aop" && git remote add origin git@github.com:userInterview/javaformation.git && git branch java8aop && git checkout java8aop && eval "$(ssh-agent -s)" && ssh-add ~/.ssh/newkeyloizv2 && git push --set-upstream origin java8aop
