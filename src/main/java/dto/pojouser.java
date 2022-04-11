@@ -9,9 +9,9 @@ public class pojouser {
 	private String prenom;
 	private String sportpractice;
 	private boolean Olympic ;
-	private pojoAdresse pojoadresse;	
+	private pojoAdresse pojoadresse;
 	private String attrScope ;
-	
+
 	public String getAttrScope() {
 		return attrScope;
 	}
@@ -21,7 +21,7 @@ public class pojouser {
 	}
 
 	@PostConstruct
-	public void initbean() {		
+	public void initbean() {
 		System.out.println(String.format("%-15s - %-10s : %-20s  %-20s", sportpractice, nom , "@PostConstruct", this.getClass().getSimpleName()));
 	}
 
@@ -32,9 +32,9 @@ public class pojouser {
 	}
 
 	public pojouser(String nom, String prenom, String sportpractice, boolean argOlympic) {
-		this.nom = nom ; 
-		this.prenom = prenom ; 
-		this.sportpractice = sportpractice ; 		
+		this.nom = nom ;
+		this.prenom = prenom ;
+		this.sportpractice = sportpractice ;
 		this.pojoadresse = new pojoAdresse("rue de " + sportpractice,"ville de " + sportpractice) ;
 		this.Olympic = argOlympic ;
 	}
@@ -66,15 +66,15 @@ public class pojouser {
 	public void setSportpractice(String sportpractice) {
 		this.sportpractice = sportpractice;
 	}
-	
+
 	public boolean isOlympic() {
 		return Olympic;
 	}
 
 	public void setOlympic(boolean olympic) {
 		Olympic = olympic;
-	}	
-	
+	}
+
 	public pojoAdresse getPojoadresse() {
 		return pojoadresse;
 	}

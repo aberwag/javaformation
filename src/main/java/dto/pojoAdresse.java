@@ -1,10 +1,10 @@
 package dto;
 
 public class pojoAdresse {
-	
+
 	private String rue ;
-	private String ville ;	
-	
+	private String ville ;
+
 	public pojoAdresse(String rue, String ville) {
 		super();
 		this.rue = rue;
@@ -30,7 +30,7 @@ public class pojoAdresse {
 	public String toString() {
 		return "pojoAdresse [rue=" + rue + ", ville=" + ville + "]";
 	}
-	
-	
+
+
 
 }
