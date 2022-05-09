@@ -10,12 +10,12 @@ import java.rmi.server.UnicastRemoteObject;
 public class ServerOperation extends UnicastRemoteObject implements RMIInterface {
 
     private static final long serialVersionUID = 1L;
-    static Registry varReristry ;
+    static Registry varRegistry ;
 
     protected ServerOperation() throws RemoteException {
 
-        super(Registry.REGISTRY_PORT);
-    	// super(1097);
+        //super(Registry.REGISTRY_PORT);
+    	 super(1097);
 
     }
     
@@ -32,7 +32,7 @@ public class ServerOperation extends UnicastRemoteObject implements RMIInterface
         InetAddress ip;
         String hostname = "" ;
         try {
-            ip = InetAddress.getLocalHost();
+            ip = InetAddress.getLocalHost();           
             hostname = ip.getHostName();
             System.out.println("Your current IP address : " + ip);
             System.out.println("Your current Hostname : " + hostname);
@@ -43,17 +43,16 @@ public class ServerOperation extends UnicastRemoteObject implements RMIInterface
         }
         try {
         	String strHost = "127.0.0.1" ;
-        	varReristry = java.rmi.registry.LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
-        	varReristry.rebind("//" + strHost + "/loizrmiserver", new ServerOperation());
+        	//varRegistry = java.rmi.registry.LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
+        	varRegistry = java.rmi.registry.LocateRegistry.createRegistry(1097);
+        	varRegistry.rebind("//" + strHost + "/loizrmiserver", new ServerOperation());
         	//varReristry.rebind("rmi://" + strHost + ":1099/loizrmiserver", exportObject(new ServerOperation() , 0));
         	
             System.err.println("Server disponible sur le nom d'hote  : " + strHost);
 
         } catch (Exception e) {
-
             System.err.println("Server exception: " + e.toString());
             e.printStackTrace();
-
         }
 
     }
