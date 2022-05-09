@@ -19,7 +19,7 @@ public class ClientOperation {
 		
 		try {		
 			
-			Registry reg=LocateRegistry.getRegistry("127.0.0.1",1099);
+			Registry reg=LocateRegistry.getRegistry("127.0.0.1",1097);
 			
 			//rmi_interf = (RMIInterface) Naming.lookup("//127.0.0.1:1099/loizrmiserver");
 			
