@@ -23,8 +23,7 @@ public class ClientOperation {
 			
 			//rmi_interf = (RMIInterface) Naming.lookup("//127.0.0.1:1099/loizrmiserver");
 			
-			rmi_interf=(RMIInterface)reg.lookup("//127.0.0.1/loizrmiserver");
-			
+			rmi_interf=(RMIInterface)reg.lookup("//127.0.0.1:1097/loizrmiserver");
 			
 			String txt = JOptionPane.showInputDialog("Entrer un mot a envoyer au serveur :");
 			String response = rmi_interf.helloTo(txt);
