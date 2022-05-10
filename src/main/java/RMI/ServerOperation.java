@@ -42,10 +42,11 @@ public class ServerOperation extends UnicastRemoteObject implements RMIInterface
             e.printStackTrace();
         }
         try {
-        	String strHost = "127.0.0.1:1097" ;
+        	String strHost = "0.0.0.0:1097" ;
         	//varRegistry = java.rmi.registry.LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
         	varRegistry = java.rmi.registry.LocateRegistry.createRegistry(1097);
-        	varRegistry.rebind("//" + strHost + "/loizrmiserver", new ServerOperation());
+        	//varRegistry.rebind("//" + strHost + "/loizrmiserver", new ServerOperation());
+        	varRegistry.rebind("//0.0.0.0:1097/loizrmiserver", new ServerOperation());
         	//varReristry.rebind("rmi://" + strHost + ":1099/loizrmiserver", exportObject(new ServerOperation() , 0));
         	
             System.err.println("Server disponible sur le nom d'hote  : " + strHost);
