@@ -20,36 +20,23 @@ public class ClientOperation {
 
 	public static void main(String[] args) 
 		throws MalformedURLException, RemoteException, NotBoundException {
-		
-		/*Enumeration<NetworkInterface> nis;
-		try {
-			nis = NetworkInterface.getNetworkInterfaces();
-			while (nis.hasMoreElements()) {
-			    NetworkInterface ni = nis.nextElement();
-			    Enumeration<InetAddress> addrs = ni.getInetAddresses();
-			    while (addrs.hasMoreElements()) {
-			        InetAddress localAddr = addrs.nextElement();
-			        System.out.println("localAddr.getHostName() : " + localAddr.getHostName()) ; 
-	            }
-			}
-		} catch (SocketException e1) {
-			e1.printStackTrace();
-		}*/
-		
-		String userHomeDir = System.getProperty("user.home");
-        System.out.println("The User Home Directory is " + userHomeDir);
-		String javaHomeDir = System.getProperty("java.home");
-        System.out.printf("The Java Home Directory is " + javaHomeDir);
-		String javaClassPath = System.getProperty("java.class.path");
-        System.out.printf("The java class path is " + javaClassPath);
         
-		
 		try {
-			Registry reg=LocateRegistry.getRegistry("0.0.0.0",1097);			
-			//rmi_interf = (RMIInterface) Naming.lookup("//127.0.0.1:1099/loizrmiserver");
-			
-			rmi_interf=(RMIInterface)reg.lookup("//0.0.0.0:1097/loizrmiserver");
-			//rmi_interf=(RMIInterface)reg.lookup   ("loizrmiserver");
+			Registry reg=LocateRegistry.getRegistry("0.0.0.0",Integer.parseInt("1097"));			
+		    String[] boundNames = reg.list();
+		    
+		    for(String name : boundNames){
+		    	System.out.println("1097 : " + name);
+		    }
+			//IP : MBP-de-Loizani.localdomain/192.168.6.107
+		    reg=LocateRegistry.getRegistry("0.0.0.0",Integer.parseInt("1098"));			
+		    boundNames = reg.list();
+		    
+		    for(String name : boundNames){
+		    	System.out.println("1098 : " + name);
+		    }	    
+		    
+			rmi_interf=(RMIInterface)reg.lookup("loizrmiserver");
 			
 			String txt = JOptionPane.showInputDialog("Entrer un mot a envoyer au serveur :");
 			String response = rmi_interf.helloTo(txt);
@@ -57,24 +44,14 @@ public class ClientOperation {
 		}
 		      
 		catch (NotBoundException e) {
-			
 			System.out.println("Erreur acces server (NotBoundException) : " + e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 		
 		catch (RemoteException e) {
-			
 			System.out.println("Erreur acces server (RemoteException) : " + e.getLocalizedMessage());
 			e.printStackTrace();
 		}
-		
-//		catch (MalformedURLException e) {
-//				
-//				System.out.println("Erreur url server (MalformedURLException) : " + e.getLocalizedMessage());
-//				e.printStackTrace();
-//		}
-		
-
 	}
 
 }
