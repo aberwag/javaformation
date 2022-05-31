@@ -1,0 +1,13 @@
+FROM openjdk:8-jdk-alpine
+EXPOSE 1097
+VOLUME /tmp
+RUN apk update
+USER root
+RUN apk add --no-cache fontconfig ttf-dejavu
+RUN apk --update --no-cache add busybox-extras
+COPY fontconfig.properties $JAVA_HOME/Lib/fontconfig.properties
+COPY target/loizRmiClient.jar  target/loizRmiClient.jar
+COPY java.policy  ${JAVA_HOME}/jre/lib/security/java.policy
+# CMD tail -f /dev/null
+ENTRYPOINT ["java","-Djava.rmi.server.hostname=192.168.6.107", "-jar", "target/loizRmiClient.jar"]
+#ENTRYPOINT ["java", "-jar", "target/loizRmiClient.jar"]

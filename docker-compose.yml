@@ -1,0 +1,37 @@
+version: "3.3"
+
+services:
+  myservicename:
+    image: openjdk:8-jdk-alpine
+    container_name: mycontainername
+    hostname: 192.168.6.107
+    build: 
+     dockerfile: DockerfileForCompose
+#   ports:
+#   - 1097:1097
+    volumes:
+     - ./java.policy:/${JAVA_HOME}/jre/lib/security/java.policy
+     - ~/.Xauthority:/root/.Xauthority:rw     
+     - /tmp/.X11-unix
+     - /tmp/.X11-unix:/tmp/.X11-unix
+     - /opt/X11:/opt/X11
+     - /dev:/dev
+     - /target/
+     - ./target/loizRmiClient.jar:/target/loizRmiClient.jar
+    network_mode: host
+    environment:
+#     - x11docker=--hostdisplay
+#     - x11docker=--gpu
+     - NOM='TOTO'
+     - DISPLAY=192.168.6.107:0   
+#   - DISPLAY=127.0.0.1:0     
+#     - "apk update"
+#   command: ["apk", "add", "xauth"]
+#   command: ["apk", "add", "--upgrade", "xorg-server"]
+#   command: ["apk", "update"]
+#     - "apk add --no-cache fontconfig ttf-dejavu"
+#     - "apk --update --no-cache add busybox-extras"
+#     - "xhost local:root"
+
+    entrypoint: ["java","-jar", "target/loizRmiClient.jar"]
+#   entrypoint: ["sh", "-c", "tail -f /dev/null"]

@@ -1,0 +1,17 @@
+FROM openjdk:8-jdk-alpine
+EXPOSE 1097
+VOLUME /tmp
+RUN apk update
+RUN apk add --no-cache fontconfig ttf-dejavu
+RUN apk --update --no-cache add busybox-extras
+RUN apk add xfce4
+RUN apk update
+# RUN startxfce4
+
+# USER root
+COPY target/loizRmiClient.jar target/loizRmiClient.jar
+
+CMD tail -f /dev/null
+
+
+# ENTRYPOINT ["java","-Djava.rmi.server.hostname=127.0.0.1", "-jar", "target/loizRmiClient.jar"]

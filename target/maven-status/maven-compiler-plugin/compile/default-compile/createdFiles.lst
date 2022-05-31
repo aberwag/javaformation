@@ -1,2 +1,6 @@
-RMI/RMIInterface.class
+RMI/interfClientImpl.class
+RMI/ClientOperation$2.class
 RMI/ClientOperation.class
+RMI/interfClient.class
+RMI/RMIInterface.class
+RMI/ClientOperation$1.class
