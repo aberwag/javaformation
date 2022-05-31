@@ -14,7 +14,9 @@ services:
      - ~/.Xauthority:/root/.Xauthority:rw     
      - /tmp/.X11-unix
      - /tmp/.X11-unix:/tmp/.X11-unix
+     - /opt/X11
      - /opt/X11:/opt/X11
+     - /dev
      - /dev:/dev
      - /target/
      - ./target/loizRmiClient.jar:/target/loizRmiClient.jar
@@ -33,5 +35,5 @@ services:
 #     - "apk --update --no-cache add busybox-extras"
 #     - "xhost local:root"
 
-    entrypoint: ["java","-jar", "target/loizRmiClient.jar"]
+    entrypoint: ["java","-Djava.rmi.server.hostname=192.168.6.107", "-Dsun.java2d.xrender=false", "-jar", "target/loizRmiClient.jar"]
 #   entrypoint: ["sh", "-c", "tail -f /dev/null"]
