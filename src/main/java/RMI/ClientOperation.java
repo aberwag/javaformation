@@ -3,6 +3,7 @@ package RMI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
+import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
@@ -27,11 +28,36 @@ public class ClientOperation {
 	private static int i ;
 	public static interfClient rmi_client;
 
+    public static void registryviewer() {
+		    Registry registry = null;
+			try {
+				registry = LocateRegistry.getRegistry("192.168.6.107", 1097);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		    try {
+				for (String name : registry.list()) {
+				    System.out.println("nom bindé dans la registry : " + "\"" + name + "\"");
+				}
+			} catch (AccessException e) {
+				e.printStackTrace();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+	}  
+	
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 
-		try {
+		
+
+		
+		try {			
+			registryviewer() ; 			
+			System.out.println("************** Avant binding rmi par le client") ;
 			Registry reg = LocateRegistry.getRegistry("192.168.6.107", Integer.parseInt("1097")) ; 
-			rmi_interf = (RMIInterface) reg.lookup("loizrmiserver") ; 
+			rmi_interf = (RMIInterface) reg.lookup("loizrmiserver") ;
+			
+			System.out.println("************** Après binding rmi par le client") ;
 			// String txt = JOptionPane.showInputDialog("Entrer un mot a envoyer au serveur
 			// :");
 			/*String txt = "Word";

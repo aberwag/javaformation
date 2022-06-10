@@ -1,13 +1,21 @@
 FROM openjdk:8-jdk-alpine
-EXPOSE 1097
+# EXPOSE 1097
 VOLUME /tmp
 RUN apk update
 USER root
+RUN apk add curl
 RUN apk add --no-cache fontconfig ttf-dejavu
 RUN apk --update --no-cache add busybox-extras
 COPY fontconfig.properties $JAVA_HOME/Lib/fontconfig.properties
 COPY target/loizRmiClient.jar  target/loizRmiClient.jar
 COPY java.policy  ${JAVA_HOME}/jre/lib/security/java.policy
 # CMD tail -f /dev/null
-ENTRYPOINT ["java","-Djava.rmi.server.hostname=192.168.6.107", "-jar", "target/loizRmiClient.jar"]
-#ENTRYPOINT ["java", "-jar", "target/loizRmiClient.jar"]
+# ENTRYPOINT ["sh", "-c", "tail -f /dev/null"]
+# ENTRYPOINT ["java","-Djava.rmi.server.hostname=192.168.6.107", "-jar", "target/loizRmiClient.jar"]
+# ENTRYPOINT ["java", "-jar", "target/loizRmiClient.jar"]
+
+# ENTRYPOINT ["java","-Dsun.java2d.xrender=false", "-Dcom.sun.management.jmxremote=false", "-Dcom.sun.management.jmxremote.port=1097", "-Dcom.sun.management.jmxremote.authenticate=false", "-Dcom.sun.management.jmxremote.ssl=false", "-Djava.rmi.server.hostname=192.168.6.107", "-Dcom.sun.management.jmxremote.rmi.port=1097", "-jar", "target/loizRmiClient.jar"]
+
+
+ENV SERVER_HOST=192.168.6.107
+ENTRYPOINT ["java", "-jar", "target/loizRmiClient.jar", "192.168.6.107"]

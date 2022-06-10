@@ -1,4 +1,3 @@
-
 // Standard extensions get all permissions by default
 
 grant codeBase "file:${{java.ext.dirs}}/*" {
@@ -10,4 +9,3 @@ grant codeBase "file:${{java.ext.dirs}}/*" {
 grant {
         permission java.security.AllPermission;
 };
-

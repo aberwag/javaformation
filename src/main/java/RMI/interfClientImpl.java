@@ -9,7 +9,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class interfClientImpl  extends UnicastRemoteObject implements interfClient {
 	
-	protected interfClientImpl() throws RemoteException {
+	public interfClientImpl() throws RemoteException {
 		super();
 		// TODO Auto-generated constructor stub
 	}
