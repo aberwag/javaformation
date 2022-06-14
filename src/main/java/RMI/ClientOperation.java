@@ -47,68 +47,25 @@ public class ClientOperation {
 	}  
 	
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
-
-		
-
 		
 		try {			
-			registryviewer() ; 			
+			//registryviewer() ; 			
 			System.out.println("************** Avant binding rmi par le client") ;
 			Registry reg = LocateRegistry.getRegistry("192.168.6.107", Integer.parseInt("1097")) ; 
-			rmi_interf = (RMIInterface) reg.lookup("loizrmiserver") ;
+			RMIInterface loRmiInterf = (RMIInterface) reg.lookup("loizrmiserver") ;
 			
 			System.out.println("************** Après binding rmi par le client") ;
-			// String txt = JOptionPane.showInputDialog("Entrer un mot a envoyer au serveur
-			// :");
-			/*String txt = "Word";
-			String response = rmi_interf.helloTo(txt);
-			JOptionPane.showMessageDialog(null, response);*/
+			String shote = null;
 			rmi_client = new interfClientImpl();
-			/*String shote = rmi_interf.StockerEnStatiqueIpClient(rmi_client);
-			System.out.println(shote);
-			JOptionPane.showMessageDialog(null, shote);*/
-			////////////////////////////////////////////
-			JFrame f = new JFrame("Button Example");
-			
-			final JTextField tf2 = new JTextField();
-			tf2.setBounds(100, 100, 150, 20);
-			JButton b2 = new JButton("loiz click");
-			b2.setBounds(100, 150, 95, 30);
-			b2.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					tf2.setText("clique No : " + i++);
-				}
-			}) ;
-			
-			
-			final JTextField tf = new JTextField();
-			tf.setBounds(50, 50, 150, 20);
-			JButton b = new JButton("Click Here");
-			b.setBounds(50, 100, 95, 30);
-			b.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					tf.setText("Welcome to Javatpoint.");
-					String shote = null;
-					try {
-						shote = rmi_interf.StockerEnStatiqueIpClient(rmi_client);
-						JOptionPane.showMessageDialog(null, "envoi effectué");
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "echec envoi : " + e1.getMessage());
-						e1.printStackTrace();
-					}
-					System.out.println(shote);
-				}
-			});
-			f.add(b);
-			f.add(tf);
-			f.add(b2);
-			f.add(tf2);
-			f.setSize(400, 400);
-			f.setLayout(null);
-			f.setVisible(true);
-
-			////////////////////////////////////////////
+			try {
+				shote = loRmiInterf.StockerEnStatiqueIpClient(rmi_client);
+				System.out.println("retour serveur =  " + shote);
+				System.exit(0);
+			} catch (RemoteException e1) {
+				System.out.println("echec envoi : : " + e1.getMessage());
+				e1.printStackTrace();
+			}
+			System.out.println(shote);		
 		}
 
 		catch (NotBoundException e) {

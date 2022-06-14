@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  labo_rmi_client:
+    container_name: Conteneur_Loiz_Rmi_Client
+    image : openjdk:8-jdk-alpine
+    ports:
+      - '1098:1098'
+    volumes: 
+     - /target/
+     - /files/
+     - ./files/java.policy:/files/java.policy 
+     - ./files/java.policy:/usr/lib/jvm/java-1.8-openjdk/jre/lib/security/java.policy
+     - ./target/:/target/
+    entrypoint: ["sh", "-c", "tail -f /dev/null"]
+#   entrypoint: ["java","-Djava.security.policy=/files/java.policy","-jar","target/LoizRmiClient.jar"]
+#   java -Djava.security.policy=/files/java.policy -jar target/LoizRmiClient.jar

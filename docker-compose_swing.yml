@@ -19,7 +19,7 @@ services:
      - /dev
      - /dev:/dev
      - /target/
-     - ./target/loizRmiClient.jar:/target/loizRmiClient.jar
+     - ./target/:/target/
  #   - ./java.policy:/target/java.policy
     network_mode: host
     environment:
