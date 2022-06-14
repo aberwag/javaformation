@@ -5,4 +5,5 @@ VOLUME /tmp
 USER root
 COPY target/LoizRmiServer.jar target/LoizRmiServer.jar
 COPY java.policy ${JAVA_HOME}/lib/security/java.policy
-ENTRYPOINT ["java", "-Djava.rmi.server.hostname=hotermi", "-jar", "target/LoizRmiServer.jar"]
+COPY java.policy target/java.policy
+ENTRYPOINT ["java", "-Djava.security.policy=java.policy", "-Djava.rmi.server.hostname=192.168.6.107", "-jar", "target/LoizRmiServer.jar"]

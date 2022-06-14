@@ -1,25 +1,12 @@
 package RMI;
 
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 
-public class ServerOperation extends UnicastRemoteObject implements RMIInterface{
-
-    private static final long serialVersionUID = 1L;
-    static Registry varRegistry ;
-    static String DonneeClient ; 
+public class ServerOperation {	
     
-    
-    protected ServerOperation() throws RemoteException {
-    	 super(1097);
-    }    
-    
-	public String StockerEnStatiqueIpClient(interfClient intClient) throws RemoteException {		
-		String sHote = intClient.RecupereAdresseIp() ;
-		System.out.println("Un\'hote vient de contacter ce serveur, voici son ip : " + sHote);
-		return sHote ;
-	}
+    static String DonneeClient ;  
     
     public String helloTo(String dataclient) throws RemoteException {
     	ServerOperation.DonneeClient = dataclient ; 
@@ -28,17 +15,27 @@ public class ServerOperation extends UnicastRemoteObject implements RMIInterface
     }
     
     public static void main(String[] args){    	
-        try {
-         	varRegistry = java.rmi.registry.LocateRegistry.createRegistry(1097) ;      
-        	varRegistry.rebind("loizrmiserver", new ServerOperation());        	   
-
-        } catch (Exception e) {
+        try {        	 
+        	System.setProperty("java.security.policy","file:java.policy") ; 
+        	System.setProperty("java.rmi.server.hostname","192.168.6.107");
+        	RMIInterfaceIMPL rmil = new RMIInterfaceIMPL()  ;         	
+        	Registry varRegistry = LocateRegistry.createRegistry(1097) ;
+        	varRegistry.rebind("loizrmiserver", rmil );
+    		System.out.println("jesuis le serveur > après rebind");
+         	//varRegistry = java.rmi.registry.LocateRegistry.createRegistry(1097) ;  
+         	//varRegistry.bind("loizrmiserver", new ServerOperation());
+         	
+        } 
+        catch (Exception e) {
             System.err.println("Server exception: " + e.toString());
             e.printStackTrace();
         }
+
+        
     }
 
 
 
 
 }
+
