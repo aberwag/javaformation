@@ -5,12 +5,22 @@ services:
     image : openjdk:8-jdk-alpine
     ports:
       - '1098:1098'
+    build: 
+     dockerfile: DockerfileForX11
     volumes: 
+     - ~/.Xauthority:/root/.Xauthority:rw
+     - /tmp/.X11-unix
+     - /tmp/.X11-unix:/tmp/.X11-unix
+     - /opt/X11
+     - /opt/X11:/opt/X11
+     - /dev
+     - /dev:/dev
      - /target/
      - /files/
-     - ./files/java.policy:/files/java.policy 
+     - ./files/:/files/ 
      - ./files/java.policy:/usr/lib/jvm/java-1.8-openjdk/jre/lib/security/java.policy
      - ./target/:/target/
+    environment:
+     - NOM='TOTO'
+     - DISPLAY=192.168.6.107:0      
     entrypoint: ["sh", "-c", "tail -f /dev/null"]
-#   entrypoint: ["java","-Djava.security.policy=/files/java.policy","-jar","target/LoizRmiClient.jar"]
-#   java -Djava.security.policy=/files/java.policy -jar target/LoizRmiClient.jar

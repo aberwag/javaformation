@@ -12,7 +12,8 @@ public class interfClientImpl  extends UnicastRemoteObject implements interfClie
 	private String attAdresseIp ; 
 	
 	public interfClientImpl() throws RemoteException {
-		super(1098);
+		//super(1098);
+		super() ;
 	}
 
 	@Override

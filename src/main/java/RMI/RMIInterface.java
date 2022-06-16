@@ -2,14 +2,16 @@ package RMI;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.SortedSet;
 
-
-//Methodes implémentées dans le serveur :
 public interface RMIInterface extends Remote {
 
-    public String helloTo(String name) throws RemoteException;
+     String helloTo(String name) throws RemoteException;
     
-    public String StockerEnStatiqueIpClient(interfClient intClient) throws RemoteException ;
+     String StockerEnStatiqueIpClient(interfClient intClient) throws RemoteException ;
 
+ 	ArrayList<String> stoquerSaisieClient(String sArgSaisie) throws RemoteException;
 
 }

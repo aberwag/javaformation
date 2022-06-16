@@ -1,0 +1,1 @@
+mvn clean package && docker rm Conteneur_Loiz_Rmi_Client && docker-compose -f local-composeLoizClient.yml up
