@@ -39,7 +39,9 @@ public class ClientOperation {
 		super();
 	}
 
-	private static RMIInterface rmi_interf;
+	private boolean bthreadStarted = false ;
+	private static loizThreadUpdateListLibel objloizThreadUpdateListLibel = null ;
+	private static RMIInterface rmi_interf_server;
 	private static int i ;
 	public static interfClient rmi_client;
 
@@ -67,15 +69,13 @@ public class ClientOperation {
 			//registryviewer() ; 			
 			System.out.println("************** Avant binding rmi par le client") ;
 			Registry reg = LocateRegistry.getRegistry("192.168.6.107", Integer.parseInt("1097")) ; 
-			rmi_interf = (RMIInterface) reg.lookup("loizrmiserver") ;
+			rmi_interf_server = (RMIInterface) reg.lookup("loizrmiserver") ;
 			
 			System.out.println("************** Après binding rmi par le client") ;
 			//String shote = null;
 			rmi_client = new interfClientImpl();
 
 			JFrame objJframe = new JFrame("Button Example");
-			//objJframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			//objJframe.setPreferredSize(new Dimension(300, 300));
 			objJframe.setDefaultCloseOperation(0);
 			objJframe.setBounds(100, 100, 600, 800);
 			
@@ -105,48 +105,36 @@ public class ClientOperation {
 			
 			objJLabel.setBounds(14, 130, 150, 20);
 			objJTextField.setBounds(10, 150, 150, 20);			
-			objJbutton.setBounds(170, 150, 95, 20);
+			objJbutton.setBounds(170, 150, 120, 20);
 			objScrollPane_For_ListedLabel.setBounds(14, 180, 300, 500);
-			//Border objBorder = BorderFactory.createLineBorder(Color.black, 1);  ;
-			//objJListedLabel.setBorder(objBorder);
 			objJListedLabel.setBackground(Color.WHITE);
 			objJListedLabel.setAlignmentX(5);
 			objJListedLabel.setVerticalAlignment(JLabel.TOP);
 			
 			objJbutton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					ArrayList<String> objSetServeur = null ;
+					ArrayList<String> objArraySaisie = null ;
 					String sSaisie = objJTextField.getText() ;
 					try {
-						objSetServeur = rmi_interf.stoquerSaisieClient(sSaisie) ;
-//						(objSetServeur.stream()).forEach(val -> { objJListedLabel.addNewLine(val) ; }) ;
-//						objJListedLabel.addNewLine(sSaisie) ;
-						System.out.println("objSetServeur.toString() : " + objSetServeur.toString() ) ;
-						//String strValprec = "" ;
-						objJListedLabel.setText("");						
-						objSetServeur.stream().forEach( val ->  {
+						objArraySaisie = rmi_interf_server.stoquerSaisieClient(sSaisie,rmi_client, true) ;							
+						
+						//on démarre la thread de mise à jour de la liste d'échange
+						if(objloizThreadUpdateListLibel==null) {
+							objloizThreadUpdateListLibel = new loizThreadUpdateListLibel(sSaisie, rmi_client, rmi_interf_server, objJListedLabel ) ;
+						    objloizThreadUpdateListLibel.start() ;
+						}					
 							
-							 if (val.length()!= 0)
-							objJListedLabel.addNewLine (val) ;} );
-						
-						
-						
-						System.out.println(" objJListedLabel.getText() : " +  objJListedLabel.getText()) ;						
-						
-						objJTextField.setText("");
-						/*System.out.println("*******************") ; 
-						(objSetServeur.stream()).forEach(val -> System.out.println("val : " + val)) ;	*/		
 					} catch (RemoteException e1) {
 						e1.printStackTrace();
 					}
 					
-					Iterator<String> iterator = objSetServeur.iterator();
+					Iterator<String> iterator = objArraySaisie.iterator();
 					while(iterator.hasNext()) {
 					    String element = (String) iterator.next();
 					    System.out.println("boucle iterator.hasNext() : " + element);
 					}					
 				}
-			}) ;
+			}) ;  
 			
 
 			final JTextField tf = new JTextField();
@@ -158,7 +146,7 @@ public class ClientOperation {
 					tf.setText("Welcome to Javatpoint.");
 					String shote = null;
 					try {
-						shote = rmi_interf.StockerEnStatiqueIpClient(rmi_client);
+						shote = rmi_interf_server.StockerEnStatiqueIpClient(rmi_client);
 						System.out.println("shote récupéré : " + shote );
 						JOptionPane.showMessageDialog(null, "envoi effectué");
 					} catch (RemoteException e1) {
@@ -169,7 +157,7 @@ public class ClientOperation {
 					System.out.println(shote);
 				}
 			});
-			objJframe.add(b);
+			objJframe.getContentPane().add(b);
 			objJframe.add(tf);			
 			objJframe.add(objJLabel);
 			objJframe.add(objJbutton);

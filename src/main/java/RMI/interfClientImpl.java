@@ -10,7 +10,8 @@ public class interfClientImpl  extends UnicastRemoteObject implements interfClie
 	private static final long serialVersionUID = 1L;
 	
 	private String attAdresseIp ; 
-	
+
+
 	public interfClientImpl() throws RemoteException {
 		//super(1098);
 		super() ;

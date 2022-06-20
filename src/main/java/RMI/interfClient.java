@@ -9,4 +9,6 @@ public interface interfClient extends Remote {
 
 	public String getAttAdresseIp() throws RemoteException;
 
+
+
 }
