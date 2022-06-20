@@ -12,6 +12,6 @@ public interface RMIInterface extends Remote {
     
      String StockerEnStatiqueIpClient(interfClient intClient) throws RemoteException ;
 
-	ArrayList<String> stoquerSaisieClient(String sArgSaisie) throws RemoteException;
+	ArrayList<String> stoquerSaisieClient(String sArgSaisie, interfClient intClient ,boolean bManuel) throws RemoteException;
 
 }

@@ -10,8 +10,9 @@ public class ServerOperation {
         try {        	 
         	/*System.setProperty("java.security.policy","file:java.policy") ; 
         	System.setProperty("java.rmi.server.hostname","192.168.6.107"); */
-        	RMIInterfaceIMPL rmil = new RMIInterfaceIMPL()  ;         	
+        	       	
         	Registry varRegistry = LocateRegistry.createRegistry(1097) ;
+        	RMIInterfaceIMPL rmil = new RMIInterfaceIMPL()  ;  
         	varRegistry.rebind("loizrmiserver", rmil );
     		System.out.println("jesuis le serveur > après rebind");
          	
