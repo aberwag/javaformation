@@ -45,10 +45,10 @@ public class ClientOperation {
 	private static int i ;
 	public static interfClient rmi_client;
 
-    public static void registryviewer() {
+    public static void registryviewer(String sIp) {
 		    Registry registry = null;
 			try {
-				registry = LocateRegistry.getRegistry("192.168.6.107", 1097);
+				registry = LocateRegistry.getRegistry(sIp, 1097);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -66,9 +66,10 @@ public class ClientOperation {
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 		
 		try {			
-			//registryviewer() ; 			
+			String sIP = args[0] ;
+			registryviewer(sIP) ; 			
 			System.out.println("************** Avant binding rmi par le client") ;
-			Registry reg = LocateRegistry.getRegistry("192.168.6.107", Integer.parseInt("1097")) ; 
+			Registry reg = LocateRegistry.getRegistry(sIP, Integer.parseInt("1097")) ; 
 			rmi_interf_server = (RMIInterface) reg.lookup("loizrmiserver") ;
 			
 			System.out.println("************** Après binding rmi par le client") ;
