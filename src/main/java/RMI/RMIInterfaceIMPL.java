@@ -16,7 +16,7 @@ public class RMIInterfaceIMPL extends UnicastRemoteObject  implements RMIInterfa
 	
 	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<String> objSetJeuSaisies = null ;
+	private ArrayList<String> attrSetJeuSaisies = null ;
 	
 	private final ArrayList<String> ObjSaisieNulle = null ;
 	
@@ -30,56 +30,32 @@ public class RMIInterfaceIMPL extends UnicastRemoteObject  implements RMIInterfa
 		super(1097);
 	}  
 	
+	public ArrayList<String> getAttrSetJeuSaisies() {
+		return attrSetJeuSaisies;
+	}
+
+	public void setAttrSetJeuSaisies(boolean bManuel,String sArgSaisie ) {
+		if (bManuel) {
+		if (attrSetJeuSaisies == null)
+			attrSetJeuSaisies = new ArrayList<String>();
+		attrSetJeuSaisies.add(sArgSaisie);
+		}
+	}
+
 	//Ici on dispose de l'échange à jour
 	@Override
 	public ArrayList<String> stoquerSaisieClient(String sArgSaisie, interfClient intClient, boolean bManuel) throws RemoteException {
-		System.out.println("(<stoquerSaisieClient hashcode de l\'instance serveur = "+this.hashCode()+"> Ici serveur) : saisie client vaut \"" + sArgSaisie + "\"");				
+		System.out.println("(<stoquerSaisieClient hashcode de l\'instance serveur = "+this.hashCode()+"> Ici serveur) : saisie client vaut \"" + sArgSaisie + "\"") ; 
 		
-		
-		
-		Integer iCode = intClient.hashCode() ;
-		if (bManuel) {
-		
-		if (objSetJeuSaisies == null)
-			objSetJeuSaisies = new ArrayList<String>();
-		
-		objSetJeuSaisies.add(sArgSaisie);
-		}
+		setAttrSetJeuSaisies( bManuel, sArgSaisie ) ;         
 		
 		if(objListClients==null)	{	  
 			objListClients = new LinkedHashSet<interfClient>() ; 			
-			objListClients.add(intClient) ; 
-		
+			objListClients.add(intClient) ; 		
 		System.out.println("(<stoquerSaisieClient - hashcode client = " + intClient.hashCode() + ">" ) ; 		
-		}
-		/*
-		//ObjSaisieNulle
-		if (ListClientToUpdate == null) {
-			ListClientToUpdate = new ArrayList<>() ; 			
-		}
-	   // On initialise avec la première saisie client
-		if(ListClientToUpdate.isEmpty())
-			ListClientToUpdate.add(new SimpleEntry<>(iCode,false)) ;
-		//Liste non vide : des saisies ont été effectuées
-		else if (!ListClientToUpdate.contains(iCode)) {			
-			 int index = ListClientToUpdate.indexOf(iCode) ;
-			 //Le client courant n'éxiste pas et vient d'ajouter une valeur
-			 if (index == -1) 
-			ListClientToUpdate.add(new SimpleEntry<>(iCode,true));
-			 
-			 else {
-				//Le client courant éxiste et vient d'ajouter une valeur
-				//On doit comparer ses données locales avec les données serveur
-			  ListClientToUpdate.add(new SimpleEntry<>(iCode,true));
-			 }
-		}
-		else {
-		    int index = ListClientToUpdate.indexOf(iCode) ;  
-		    ListClientToUpdate.remove(index); 
-		    ListClientToUpdate.add(index, new SimpleEntry<>(iCode,true)) ; 		    
-		} */
-		
-		return objSetJeuSaisies ;
+		} 
+	
+		return attrSetJeuSaisies ;
 	}
 
 	public Set<interfClient> getObjListClients() {
