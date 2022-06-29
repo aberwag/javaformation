@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.function.Consumer;
 
+import javax.naming.CommunicationException;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,19 +32,14 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 
+import RMI.ldap.Ldap;
 import helper.ExploreThreads;
 
 public class ClientOperation {
 
-	protected ClientOperation() throws RemoteException {
+	protected ClientOperation() {
 		super();
 	}
-
-	private boolean bthreadStarted = false;
-	private static loizThreadUpdateListLibel objloizThreadUpdateListLibel = null;
-	private static RMIInterface rmi_interf_server;
-	private static int i;
-	public static interfClient rmi_client;
 
 	public static void registryviewer(String sIp) {
 		Registry registry = null;
@@ -63,124 +59,10 @@ public class ClientOperation {
 		}
 	}
 
-	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
-
-		try {
-			String sIP = "";
-			if (args != null)
-				if (args.length > 0)
-					sIP = args[0];
-			registryviewer(sIP);
-			if (sIP.length() == 0)
-				sIP = "127.0.0.1";
-			System.out.println("************** Avant binding rmi par le client");
-			Registry reg = LocateRegistry.getRegistry(sIP, Integer.parseInt("1097"));
-			rmi_interf_server = (RMIInterface) reg.lookup("loizrmiserver");
-
-			System.out.println("************** Après binding rmi par le client");
-			// String shote = null;
-			rmi_client = new interfClientImpl();
-
-			JFrame objJframe = new JFrame("Button Example");
-			objJframe.setDefaultCloseOperation(0);
-			objJframe.setBounds(100, 100, 600, 800);
-
-			/* Some piece of code */
-			objJframe.addWindowListener(new WindowAdapter() {
-				@Override
-				public void windowClosing(WindowEvent windowEvent) {
-					if (JOptionPane.showConfirmDialog(objJframe, "Etes vous sûr de vouloir fermer ?", "fermer ?",
-							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-						System.exit(0);
-					}
-				}
-			});
-
-			LzMultilineJLabell objJListedLabel = new LzMultilineJLabell();
-			JScrollPane objScrollPane_For_ListedLabel = new JScrollPane(objJListedLabel,
-					JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-			JLabel objJLabel = new JLabel("communication rmi");
-
-			final JTextField objJTextField = new JTextField();
-			JButton objJbutton = new JButton("send text with rmi");
-
-			objJLabel.setBounds(14, 130, 150, 20);
-			objJTextField.setBounds(10, 150, 150, 20);
-			objJbutton.setBounds(170, 150, 120, 20);
-			objScrollPane_For_ListedLabel.setBounds(14, 180, 300, 500);
-			objJListedLabel.setBackground(Color.WHITE);
-			objJListedLabel.setAlignmentX(5);
-			objJListedLabel.setVerticalAlignment(JLabel.TOP);
-
-			objJbutton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					ArrayList<String> objArraySaisie = null;
-					String sSaisie = objJTextField.getText();
-					try {
-						objArraySaisie = rmi_interf_server.stoquerSaisieClient(sSaisie, rmi_client, true);
-
-						// on démarre la thread de mise à jour de la liste d'échange
-						if (objloizThreadUpdateListLibel == null) {
-							objloizThreadUpdateListLibel = new loizThreadUpdateListLibel(sSaisie, rmi_client,
-									rmi_interf_server, objJListedLabel);
-							objloizThreadUpdateListLibel.start();
-						}
-
-					} catch (RemoteException e1) {
-						e1.printStackTrace();
-					}
-
-					Iterator<String> iterator = objArraySaisie.iterator();
-					while (iterator.hasNext()) {
-						String element = (String) iterator.next();
-						System.out.println("boucle iterator.hasNext() : " + element);
-					}
-				}
-			});
-
-			final JTextField tf = new JTextField();
-			tf.setBounds(50, 50, 150, 20);
-			JButton b = new JButton("Click Here");
-			b.setBounds(50, 100, 95, 30);
-			b.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					tf.setText("Welcome to Javatpoint.");
-					String shote = null;
-					try {
-						shote = rmi_interf_server.StockerEnStatiqueIpClient(rmi_client);
-						System.out.println("shote récupéré : " + shote);
-						JOptionPane.showMessageDialog(null, "envoi effectué");
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "echec envoi : " + e1.getMessage());
-						e1.printStackTrace();
-					}
-					System.out.println(shote);
-				}
-			});
-			objJframe.getContentPane().add(b);
-			objJframe.add(tf);
-			objJframe.add(objJLabel);
-			objJframe.add(objJbutton);
-			objJframe.add(objJTextField);
-			objJframe.getContentPane().add(objScrollPane_For_ListedLabel);
-			// objJframe.add(objJLabel);
-			// objJframe.setSize(400, 400);
-			objJframe.setLayout(null);
-			objJframe.setVisible(true);
-
+	public static void main(String[] args)  {	
+		
+		LoginUI objLoginUI = new LoginUI("Fenêtre de connexion LDAP") ; 
+		objLoginUI.buildFields(args) ;
 		}
-
-		catch (NotBoundException e) {
-			System.out.println("Erreur acces server (NotBoundException) : " + e.getLocalizedMessage());
-			e.printStackTrace();
-		}
-
-		catch (RemoteException e) {
-			System.out.println("Erreur acces server (RemoteException) : " + e.getLocalizedMessage());
-			e.printStackTrace();
-		}
-	}
-
+	
 }
