@@ -32,16 +32,18 @@ public class ViewGroupChat extends JFrame {
 	private static loizThreadUpdateListLibel objloizThreadUpdateListLibel = null;
 	private static RMIInterface rmi_interf_server;
 	private static int i;
+	private static String attrLogin ;
 	public static interfClient rmi_client;
+	
 
 	protected ViewGroupChat() throws RemoteException {
 		super();
 	}
 
-	public ViewGroupChat(String title) throws HeadlessException {
+	public ViewGroupChat(String title, String sargLogin) throws HeadlessException {
 		super(title);
 		objJFrameChat = this;
-		// TODO Auto-generated constructor stub
+		attrLogin = sargLogin ;
 	}
 
 	public void buildUI(String[] sCLI_Input) throws MalformedURLException, RemoteException, NotBoundException {
@@ -90,7 +92,7 @@ public class ViewGroupChat extends JFrame {
 			objJbutton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					ArrayList<String> objArraySaisie = null;
-					String sSaisie = objJTextField.getText();
+					String sSaisie = attrLogin + ">" + objJTextField.getText();
 					try {
 						objArraySaisie = rmi_interf_server.stoquerSaisieClient(sSaisie, rmi_client, true);
 
@@ -139,8 +141,6 @@ public class ViewGroupChat extends JFrame {
 			objJFrameChat.add(objJbutton);
 			objJFrameChat.add(objJTextField);
 			objJFrameChat.getContentPane().add(objScrollPane_For_ListedLabel);
-			// objJframe.add(objJLabel);
-			// objJframe.setSize(400, 400);
 			objJFrameChat.setLayout(null);
 			objJFrameChat.setVisible(true);
 		} catch (NotBoundException e) {

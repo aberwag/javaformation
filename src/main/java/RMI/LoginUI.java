@@ -85,7 +85,7 @@ public class LoginUI extends JFrame {
 						
 						objJFrameLogin.setVisible(false);
 						objJFrameLogin.dispose();						
-						ViewGroupChat objViewGroupChat = new ViewGroupChat("Groupe de papoteurs") ;						
+						ViewGroupChat objViewGroupChat = new ViewGroupChat("Groupe de papoteurs",getLogin()) ;						
 						objViewGroupChat.buildUI(attrCLI_Input);
 					}
 					else {
@@ -120,11 +120,11 @@ public class LoginUI extends JFrame {
 		return okCon;
 	}
 
-	public String getPassword() {
+	private String getPassword() {
 		return objJTextFieldMotPasse.getText();
 	}
 
-	public String getLogin() {
+	private String getLogin() {
 		return objJTextFieldLogin.getText();
 	}
 
