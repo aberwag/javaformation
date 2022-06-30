@@ -25,7 +25,7 @@ public class loizThreadUpdateListLibel extends Thread {
 	public void run() {
 		while (true) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -36,8 +36,6 @@ public class loizThreadUpdateListLibel extends Thread {
 	public void updateList() {
 		try {
 			attrArraySaisie = attrInterServer.stoquerSaisieClient(attrSaisie, attrInterClient, false);
-			//if (attrArraySaisie != null && attrArraySaisieLast != null) 
-			//String sConcat = attrJListedLabel.getText() ;
 				if(!attrArraySaisieLast.equals(attrArraySaisie)) {  
 						attrJListedLabel.builListDialog(attrArraySaisie );	
 						attrArraySaisieLast = attrArraySaisie ;

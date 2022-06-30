@@ -1,6 +1,7 @@
 package RMI;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,6 +34,7 @@ public class ViewGroupChat extends JFrame {
 	private static RMIInterface rmi_interf_server;
 	private static int i;
 	private static String attrLogin ;
+	private JLabel objJLabelWelcome = null;
 	public static interfClient rmi_client;
 	
 
@@ -71,17 +73,14 @@ public class ViewGroupChat extends JFrame {
 			objJFrameChat.setBounds(100, 100, 600, 800);
 
 			AppHelper.fermFenetreDispo(objJFrameChat);
-
+			objJLabelWelcome = new JLabel("BIENVENUE à <" + attrLogin + "> sur le *** SwingChat ***");
+			objJLabelWelcome.setBounds(100, 20, 450, 50);
+			objJLabelWelcome.setFont(new Font("Arial", Font.BOLD, 16));
+			
 			LzMultilineJLabell objJListedLabel = new LzMultilineJLabell();
-			JScrollPane objScrollPane_For_ListedLabel = new JScrollPane(objJListedLabel,
-					JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-			JLabel objJLabel = new JLabel("communication rmi");
-
+			JScrollPane objScrollPane_For_ListedLabel = new JScrollPane(objJListedLabel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			final JTextField objJTextField = new JTextField();
-			JButton objJbutton = new JButton("send text with rmi");
-
-			objJLabel.setBounds(14, 130, 150, 20);
+			JButton objJbutton = new JButton("envoi vers le tchat");
 			objJTextField.setBounds(10, 150, 150, 20);
 			objJbutton.setBounds(170, 150, 120, 20);
 			objScrollPane_For_ListedLabel.setBounds(14, 180, 300, 500);
@@ -114,33 +113,10 @@ public class ViewGroupChat extends JFrame {
 					}
 				}
 			});
-
-			final JTextField tf = new JTextField();
-			tf.setBounds(50, 50, 150, 20);
-			JButton b = new JButton("Click Here");
-			b.setBounds(50, 100, 95, 30);
-			b.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					tf.setText("Welcome to Javatpoint.");
-					String shote = null;
-					try {
-						shote = rmi_interf_server.StockerEnStatiqueIpClient(rmi_client);
-						System.out.println("shote récupéré : " + shote);
-						JOptionPane.showMessageDialog(null, "envoi effectué");
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "echec envoi : " + e1.getMessage());
-						e1.printStackTrace();
-					}
-					System.out.println(shote);
-				}
-			});
-			objJFrameChat.getContentPane().add(b);
-			objJFrameChat.add(tf);
-			objJFrameChat.add(objJLabel);
-			objJFrameChat.add(objJbutton);
-			objJFrameChat.add(objJTextField);
-			objJFrameChat.getContentPane().add(objScrollPane_For_ListedLabel);
+            objJFrameChat.add(objJLabelWelcome) ; 
+			objJFrameChat.add(objJbutton) ; 
+			objJFrameChat.add(objJTextField) ; 
+			objJFrameChat.getContentPane().add(objScrollPane_For_ListedLabel) ;
 			objJFrameChat.setLayout(null);
 			objJFrameChat.setVisible(true);
 		} catch (NotBoundException e) {

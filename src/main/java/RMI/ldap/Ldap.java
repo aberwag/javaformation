@@ -6,7 +6,6 @@ import javax.naming.InvalidNameException;
 import javax.naming.NamingException;
 //import javax.naming.ldap.*;
 import javax.naming.directory.*;
-
 public class Ldap {
 
 	boolean okConnection = false;
@@ -18,16 +17,21 @@ public class Ldap {
 			environment.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 			environment.put(Context.PROVIDER_URL, "ldap://localhost:389");
 			environment.put(Context.SECURITY_AUTHENTICATION, "simple");
-			
 			sLogin = getFormatedLogin(sLogin);
 			environment.put(Context.SECURITY_PRINCIPAL, sLogin);
-			environment.put(Context.SECURITY_CREDENTIALS, sPassword);			
+			environment.put(Context.SECURITY_CREDENTIALS, sPassword);	
+			//environment.put(Context.SECURITY_PROTOCOL, "ssl");			
+			
+		
 			
 			new InitialDirContext(environment);
 			
 			okConnection = true;
 			// context.close();
-		} catch (InvalidNameException e) {
+		} 
+
+		
+		catch (InvalidNameException e) {
 			System.out.println("InvalidNameException : format de login non adapté");
 		} catch (NamingException e) {
 			okConnection = false;
