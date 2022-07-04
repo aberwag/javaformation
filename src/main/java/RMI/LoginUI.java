@@ -116,7 +116,7 @@ public class LoginUI extends JFrame {
 		String sLoginUser = getLogin();
 		String sPassUser = getPassword();
 		Ldap objLdap = new Ldap();
-		okCon = objLdap.initLDAP(sLoginUser, sPassUser);
+		okCon = objLdap.initLDAP(sLoginUser, sPassUser, attrCLI_Input);
 		return okCon;
 	}
 

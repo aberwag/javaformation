@@ -10,12 +10,23 @@ public class Ldap {
 
 	boolean okConnection = false;
 
-	public boolean initLDAP(String sLogin, String sPassword) {
+	public boolean initLDAP(String sLogin, String sPassword, String[] sTabHost) {
 		try {
 
+			String sIP = "";
+			if (sTabHost != null)
+				if (sTabHost.length > 0)
+					sIP = sTabHost[0];
+				else
+					sIP = "127.0.0.1";
+			
 			Hashtable<String, String> environment = new Hashtable<String, String>();
 			environment.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-			environment.put(Context.PROVIDER_URL, "ldap://localhost:389");
+			
+			
+			
+			environment.put(Context.PROVIDER_URL, "ldap://"+sIP+":389");
+			//environment.put(Context.PROVIDER_URL, "ldaps://"+sIP+":636");
 			environment.put(Context.SECURITY_AUTHENTICATION, "simple");
 			sLogin = getFormatedLogin(sLogin);
 			environment.put(Context.SECURITY_PRINCIPAL, sLogin);
@@ -33,9 +44,10 @@ public class Ldap {
 		
 		catch (InvalidNameException e) {
 			System.out.println("InvalidNameException : format de login non adapté");
-		} catch (NamingException e) {
+		} catch (NamingException ne) {
 			okConnection = false;
 			System.out.println("NamingException : connexion  non établie");
+			ne.printStackTrace() ;
 		}
 
 		return okConnection;
